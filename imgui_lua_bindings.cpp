@@ -385,7 +385,6 @@ static const struct luaL_Reg imguilib [] = {
 #define END_ENUM(name)
 
 #include "imgui_iterator.inl"
-  {"Button", impl_Button},
   {NULL, NULL}
 };
 
@@ -497,10 +496,13 @@ static void PushImguiEnums(lua_State* lState, const char* tableName) {
 };
 
 
-void LoadImguiBindings() {
+void LoadImguiBindings(lua_State* L) {
+  lState = L;
+
   if (!lState) {
     fprintf(stderr, "You didn't assign the global lState, either assign that or refactor LoadImguiBindings and RunString\n");
   }
+
   lua_newtable(lState);
   luaL_setfuncs(lState, imguilib, 0);
   PushImguiEnums(lState, "constant");
