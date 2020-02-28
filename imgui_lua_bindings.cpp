@@ -207,8 +207,11 @@ static int impl_##name(lua_State *L) { \
   bool i_##name##_value; \
   bool* name = NULL; \
   if (arg <= max_args) { \
-    i_##name##_value = lua_toboolean(L, arg++); \
-    name = &(i_##name##_value); \
+    if (!lua_isnil(L, arg)) { \
+      i_##name##_value = lua_toboolean(L, arg); \
+      name = &(i_##name##_value); \
+    } \
+    arg++;\
   }
 
 #define OPTIONAL_BOOL_ARG(name, otherwise) \
