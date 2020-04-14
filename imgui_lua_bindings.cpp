@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <imgui.h>
+#include <misc/cpp/imgui_stdlib.h>
 #include <deque>
 
 extern "C" {
@@ -167,6 +168,16 @@ static int impl_##name(lua_State *L) { \
     name = (int)lua_tonumber(L, arg++); \
   }
 
+#define STRING_ARG(name, size) \
+  std::string str_##name = luaL_checkstring(L, arg++); \
+  std::string* name = &str_##name; \
+  size_t size;
+
+#define END_STRING(name, size) \
+  lua_pushstring(L, name->c_str()); \
+  stackval++;
+
+
 #define INT_ARG(name) \
   const int name = (int)luaL_checknumber(L, arg++);
 
@@ -326,6 +337,10 @@ static const struct luaL_Reg imguilib [] = {
 #define FLOAT_POINTER_ARG(name)
 #undef END_FLOAT_POINTER
 #define END_FLOAT_POINTER(name)
+#undef STRING_ARG
+#define STRING_ARG(name, size)
+#undef END_STRING
+#define END_STRING(name, size)
 #undef OPTIONAL_INT_ARG
 #define OPTIONAL_INT_ARG(name, otherwise)
 #undef INT_ARG
@@ -438,6 +453,10 @@ static void PushImguiEnums(lua_State* lState, const char* tableName) {
 #define FLOAT_POINTER_ARG(name)
 #undef END_FLOAT_POINTER
 #define END_FLOAT_POINTER(name)
+#undef STRING_ARG
+#define STRING_ARG(name, size)
+#undef END_STRING
+#define END_STRING(name, size)
 #undef OPTIONAL_INT_ARG
 #define OPTIONAL_INT_ARG(name, otherwise)
 #undef INT_ARG

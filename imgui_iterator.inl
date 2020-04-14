@@ -936,20 +936,37 @@ END_IMGUI_FUNC
 // Unsupported arg type  const void* p_min
 // Unsupported arg type  const void* p_max
 //    IMGUI_API bool          InputText(const char* label, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
-// Unsupported arg type  char* buf
-// Unsupported arg type  size_t buf_size
-// Unsupported arg type  ImGuiInputTextCallback callback = NULL
-// Unsupported arg type  void* user_data = NULL
+// string var is (buf) size var is (buf_size)
+IMGUI_FUNCTION(InputText)
+LABEL_ARG(label)
+STRING_ARG(buf, buf_size)
+OPTIONAL_INT_ARG(flags, 0)
+CALL_FUNCTION(InputText, bool, label, buf, flags, NULL, NULL)
+PUSH_BOOL(ret)
+END_STRING(buf, buf_size)
+END_IMGUI_FUNC
 //    IMGUI_API bool          InputTextMultiline(const char* label, char* buf, size_t buf_size, const ImVec2& size = ImVec2 0 0, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
-// Unsupported arg type  char* buf
-// Unsupported arg type  size_t buf_size
-// Unsupported arg type  ImGuiInputTextCallback callback = NULL
-// Unsupported arg type  void* user_data = NULL
+// string var is (buf) size var is (buf_size)
+IMGUI_FUNCTION(InputTextMultiline)
+LABEL_ARG(label)
+STRING_ARG(buf, buf_size)
+OPTIONAL_IM_VEC_2_ARG(size, 0, 0)
+OPTIONAL_INT_ARG(flags, 0)
+CALL_FUNCTION(InputTextMultiline, bool, label, buf, size, flags, NULL, NULL)
+PUSH_BOOL(ret)
+END_STRING(buf, buf_size)
+END_IMGUI_FUNC
 //    IMGUI_API bool          InputTextWithHint(const char* label, const char* hint, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
-// Unsupported arg type  char* buf
-// Unsupported arg type  size_t buf_size
-// Unsupported arg type  ImGuiInputTextCallback callback = NULL
-// Unsupported arg type  void* user_data = NULL
+// string var is (buf) size var is (buf_size)
+IMGUI_FUNCTION(InputTextWithHint)
+LABEL_ARG(label)
+LABEL_ARG(hint)
+STRING_ARG(buf, buf_size)
+OPTIONAL_INT_ARG(flags, 0)
+CALL_FUNCTION(InputTextWithHint, bool, label, hint, buf, flags, NULL, NULL)
+PUSH_BOOL(ret)
+END_STRING(buf, buf_size)
+END_IMGUI_FUNC
 //    IMGUI_API bool          InputFloat(const char* label, float* v, float step = 0.0f, float step_fast = 0.0f, const char* format = "%.3f", ImGuiInputTextFlags flags = 0);
 IMGUI_FUNCTION(InputFloat)
 LABEL_ARG(label)
@@ -1694,7 +1711,6 @@ END_IMGUI_FUNC
 // Unsupported arg type  void* user_data)
 // Unsupported arg type  void (*free_func)(void* ptr
 // Unsupported arg type  void* user_data)
-// Unsupported arg type  void* user_data = NULL
 //    IMGUI_API void*         MemAlloc(size_t size);
 // Unsupported return type void*
 // Unsupported arg type size_t size

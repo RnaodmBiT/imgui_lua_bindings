@@ -329,6 +329,20 @@ sub generateImguiGeneric {
           # we don't support variadic functions yet but we let you use it without extra variables
         } elsif ($args[$i] =~ m/^ *\.\.\. *$/) {
           print "// Variadic functions aren't suppported but here it is anyway\n";
+        } elsif ((my ($name) = $args[$i] =~ m/^ *char *\* *([^ =\[]*)$/) && (my ($size) = $args[$i+1] =~ m/^ *size_t *([^ =\[]*)$/)) {
+          # print "// string var is ($name) size var is ($size)\n";
+          push(@before, "STRING_ARG($name, $size)");
+          push(@funcArgs, $name);
+          # push(@funcArgs, $size);
+          push(@after, "END_STRING($name, $size)");
+          # print "// strings are a work in progress\n";
+          $i += 1; # this is a double argument so skip the next one
+        } elsif ($args[$i] =~ m/^ *ImGuiInputTextCallback *([^ =\[]*) *= *NULL *$/) {
+          # print "// found callback ($1)\n";
+          push(@funcArgs, "NULL");
+        } elsif ($args[$i] =~ m/^ *void\* *user_data *= *NULL *$/) {
+          # print "// found user_data for callback\n";
+          push(@funcArgs, "NULL");
         } else {
           print "// Unsupported arg type " . $args[$i] . "\n";
           $shouldPrint = 0;
